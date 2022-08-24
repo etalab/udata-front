@@ -7,13 +7,12 @@ from urllib.parse import urlsplit, urlunsplit
 
 from babel.numbers import format_decimal
 from flask import g, url_for, request, current_app, json
-from flask_restplus import marshal
 from jinja2 import Markup, contextfilter
 from werkzeug import url_decode, url_encode
 
 from . import front
 
-from udata.core.dataset.apiv2 import dataset_fields
+from udata.core.dataset.apiv2_schemas import DatasetSchema
 from udata.core.dataset.models import Dataset
 from udata.models import db
 from udata.i18n import format_date, _, pgettext, get_current_locale
@@ -382,7 +381,7 @@ def to_api_format(data):
 
 
 def to_dataset_api_format(dataset):
-    return marshal(dataset, dataset_fields)
+    return DatasetSchema().dump(dataset)
 
 
 @front.app_template_filter()

@@ -1,9 +1,10 @@
 from typing import Optional
 from flask import request, redirect, abort, g
 from flask.views import MethodView
+from webargs import fields
+from webargs.flaskparser import parser
 
 from udata import search, auth
-from udata.utils import not_none_dict
 from udata_front import theme
 
 
@@ -96,10 +97,10 @@ class SearchView(Templated, BaseView):
     page_size: Optional[int] = None
 
     def get_queryset(self):
-        parser = self.search_adapter.as_request_parser()
+        parser_args = self.search_adapter.as_request_parser()
         if self.page_size:
-            parser.replace_argument('page_size', type=int, location='args', default=self.page_size)
-        return search.query(self.search_adapter, **not_none_dict(parser.parse_args()))
+            parser_args['page_size'] = fields.Int(load_default=self.page_size)
+        return search.query(self.search_adapter, **parser.parse(parser_args, request))
 
     def get_context(self):
         context = super(SearchView, self).get_context()
