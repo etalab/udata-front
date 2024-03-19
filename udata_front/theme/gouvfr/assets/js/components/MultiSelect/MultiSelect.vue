@@ -127,6 +127,13 @@ export default defineComponent({
     addNewOption: {
       type: Boolean,
       default: false,
+    },
+    hasLink: {
+      type: Boolean,
+      default: false,
+    },
+    linkText: {
+      type: String
     }
   },
   setup(props, { emit }) {
@@ -237,7 +244,6 @@ export default defineComponent({
        */
       return api.get(props.listUrl)
       .then(resp => {
-        let data = resp.data;
         if(!Array.isArray(data)) {
           data = data.data;
         }
@@ -261,6 +267,10 @@ export default defineComponent({
       image: obj.logo_thumbnail ?? obj.logo ?? obj.image_url ?? obj.image,
       hidden: obj.hidden,
       selected: !!obj.selected,
+      ...(props.hasLink && {
+        link: obj.page ?? obj.link,
+        linkText: props.linkText ?? obj.linkText ?? "Open link"
+      })
     }));
 
     /**
