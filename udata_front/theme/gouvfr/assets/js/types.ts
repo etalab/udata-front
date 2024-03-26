@@ -186,4 +186,17 @@ export type Me = User & {
 
 export type AxisAlignment = "start" | "center" | "end";
 
+export type SpatialZone = {
+code: string;
+id: string;
+level: string;
+name: string;
+uri: string;
+};
+
+export type SpatialGranularity = {
+id: string;
+name: string;
+};
+
 export default {};
