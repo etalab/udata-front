@@ -30,6 +30,8 @@ export type PublishingFormAccordionState = AccordionFunctionalState | DSFRInfoSt
 
 export type AccordionState = DSFRFormDefaultState | AccordionFunctionalState | DSFRInfoState;
 
+export type AdminBadgeState = DSFRFormDefaultState | FormFunctionalState | DSFRInfoState;
+
 export type ResourceType = typeof import("./helpers").RESOURCE_TYPE[number];
 
 export type RemoteResourceFileType = "remote";
@@ -185,5 +187,9 @@ export type Me = User & {
 }
 
 export type AxisAlignment = "start" | "center" | "end";
+
+export type SortDirection = 'asc' | 'desc';
+
+export type DatasetSortedBy = 'title' | 'created' | 'last_update' | 'reuses' | 'followers' | 'views';
 
 export default {};
